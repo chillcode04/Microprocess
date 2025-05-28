@@ -1,5 +1,5 @@
 #include "sdcard.h"
-
+#include "config.h"
 __attribute__((unused)) static const char *TAG = "SDcard";
 
 

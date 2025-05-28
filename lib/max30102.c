@@ -7,7 +7,7 @@
 #include <esp_err.h>
 #include <esp_timer.h>
 #include "max30102.h"
-
+#include "config.h"
 #define CHECK_ARG(ARG) do { if (!(ARG)) return ESP_ERR_INVALID_ARG; } while (0)
 
 esp_err_t max30102_readPartID(i2c_dev_t *dev) {
@@ -510,16 +510,16 @@ void max30102_test(void *pvParameters) {
             float ir_norm  = (float)ir  / ADC_RESOLUTION;
 
             // Lọc tín hiệu
-            float red_filtered = apply_bandpass(&bpf_red, red_norm);
-            float ir_filtered  = apply_bandpass(&bpf_ir, ir_norm);
+            // float red_filtered = apply_bandpass(&bpf_red, red_norm);
+            // float ir_filtered  = apply_bandpass(&bpf_ir, ir_norm);
 
             // Trả về lại dạng nguyên bằng cách nhân lại
-            int32_t red_out = (int32_t)(red_filtered * ADC_RESOLUTION);
-            int32_t ir_out  = (int32_t)(ir_filtered  * ADC_RESOLUTION);
+            // int32_t red_out = (int32_t)(red_filtered * ADC_RESOLUTION);
+            // int32_t ir_out  = (int32_t)(ir_filtered  * ADC_RESOLUTION);
 
             // In ra kết quả đã lọc (như định dạng cũ)
             //printf("%ld %ld\n", red_out, ir_out);
-            printf("%ld\n", red_out);
+            // printf("%ld\n", red_out);
 
             max30102_nextSample(&record);
         }

@@ -3,7 +3,7 @@
 #include "esp_oled.h"
 
 void i2s_install(void){
-    //ESP_LOGI(TAG, "Cau hinh kenh i2s...");
+    //ESP_LOGI(TAG_INMP441, "Cau hinh kenh i2s...");
     oled_display_text("I2S installing...");
     //Cau hinh kenh rx cho i2s
     i2s_chan_config_t chan_cfg = {
@@ -52,22 +52,22 @@ void i2s_install(void){
     ESP_ERROR_CHECK(i2s_channel_init_std_mode(rx_channel, &std_cfg));
     //Bat kenh RX 
     ESP_ERROR_CHECK(i2s_channel_enable(rx_channel));
-    //ESP_LOGI(TAG, "I2S da duoc cau hinh thanh cong !");
+    //ESP_LOGI(TAG_INMP441, "I2S da duoc cau hinh thanh cong !");
 }
 
 void readINMP441data_task(void *pvParameters){ 
     i2s_install();
-    //ESP_LOGI(TAG, "Bat dau doc du lieu tu INMP441...");
+    //ESP_LOGI(TAG_INMP441, "Bat dau doc du lieu tu INMP441...");
     oled_display_text("INMP441 reading...");
     size_t bytes_read;
     while(true){
         vTaskDelay(1);
         esp_err_t ret = i2s_channel_read(rx_channel, &buffer32, sizeof(buffer32), &bytes_read, 500);
         if(ret == ESP_ERR_TIMEOUT){
-            ESP_LOGE(TAG, "Timeout xay ra, bo qua frame loi:  %s", esp_err_to_name(ret));
+            ESP_LOGE(TAG_INMP441, "Timeout xay ra, bo qua frame loi:  %s", esp_err_to_name(ret));
             continue;
         } else if(ret != ESP_OK){   
-            ESP_LOGE(TAG, "Loi khong xac dinh: %s", esp_err_to_name(ret));
+            ESP_LOGE(TAG_INMP441, "Loi khong xac dinh: %s", esp_err_to_name(ret));
             break;
         }
         // Khi da nhan duoc du lieu tu I2S 768 bytes (192 mau), thuc hien xu ly du lieu

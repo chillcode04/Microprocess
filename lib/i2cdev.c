@@ -36,7 +36,7 @@
 #include <freertos/task.h>
 #include <esp_log.h>
 #include "i2cdev.h"
-
+#include "config.h"
 static const char *TAG = "i2cdev";
 
 typedef struct {
