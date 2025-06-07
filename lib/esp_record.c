@@ -18,7 +18,7 @@ void spiInit()
 #else
         .format_if_mount_failed = false,
 #endif // EXAMPLE_FORMAT_IF_MOUNT_FAILED
-        .max_files = 5,
+        .max_files = 6,
         .allocation_unit_size = 16 * 1024};
     ESP_LOGI(TAG, "Initializing SD card");
     sdmmc_host_t host = SDSPI_HOST_DEFAULT();
@@ -28,7 +28,7 @@ void spiInit()
         .sclk_io_num = PIN_NUM_CLK,
         .quadwp_io_num = -1,
         .quadhd_io_num = -1,
-        .max_transfer_sz = 4000,
+        .max_transfer_sz = 4 * 1024,
     };
     ret = spi_bus_initialize(host.slot, &bus_cfg, SPI_DMA_CHAN);
     if (ret != ESP_OK)
@@ -100,7 +100,7 @@ void i2s_adc_data_scale(uint8_t *d_buff, uint8_t *s_buff, uint32_t len)
 
 void i2s_record(void *arg)
 {
-    oled_display_text("Recording start!");
+    //oled_display_text("Recording start!");
     int i2s_read_len = I2S_READ_LEN;
     int flash_wr_size = 0;
     size_t bytes_read;
@@ -110,7 +110,7 @@ void i2s_record(void *arg)
 
     i2s_read(I2S_PORT, (void *)i2s_read_buff, i2s_read_len, &bytes_read, portMAX_DELAY);
 
-    oled_display_text(" Recording ...");
+    //oled_display_text(" Recording ...");
     ESP_LOGI(TAG, " *** Recording Start *** ");
     while (flash_wr_size < RECORD_SIZE)
     {
@@ -129,8 +129,8 @@ void i2s_record(void *arg)
     free(flash_write_buff);
     flash_write_buff = NULL;
     ESP_LOGI(TAG, " *** Recording Done *** ");
-    oled_display_text("Recording done!");
-    oled_display_text("Save file wav!");
+   // oled_display_text("Recording done!");
+    //oled_display_text("Save file wav!");
     ESP_LOGI(TAG, "Saved file %s%s", mount_point, file_wav);
 
     i2s_stop(I2S_PORT);
@@ -191,7 +191,7 @@ void record()
     spiInit();
     if (ret != ESP_OK)
     { 
-        oled_display_text("SD card failed!");
+       // oled_display_text("SD card failed!");
         ESP_LOGE(TAG, "SD card mount failed, cannot open file.");
         return;
     }

@@ -27,10 +27,6 @@
 #define ESP_ERROR_SD_RENAME_FILE_FAILED     ((ID_SD_CARD << 12)|(0x04))
 #define ESP_ERROR_SD_REMOVE_FILE_FAILED     ((ID_SD_CARD << 12)|(0x05))
 
-// #define PIN_NUM_MISO 21
-// #define PIN_NUM_MOSI 19
-// #define PIN_NUM_CLK  18
-// #define PIN_NUM_CS   5
 
 #define SPI_BUS_CONFIG_DEFAULT()  { .mosi_io_num = CONFIG_PIN_NUM_MOSI,    \
                                     .miso_io_num = CONFIG_PIN_NUM_MISO,    \

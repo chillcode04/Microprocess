@@ -44,7 +44,7 @@ typedef struct {
     i2c_config_t config;
     bool installed;
 } i2c_port_state_t;
-
+    
 static i2c_port_state_t states[I2C_NUM_MAX];
 
 #if CONFIG_I2CDEV_NOLOCK

@@ -22,7 +22,7 @@ esp_err_t sdcard_initialize(esp_vfs_fat_sdmmc_mount_config_t *_mount_config, sdm
         ESP_LOGE(__func__, "Failed to initialize the SDcard.");
         return ESP_ERROR_SD_INIT_FAILED;
     }
-    _slot_config->gpio_cs = CONFIG_PIN_NUM_CS;
+    _slot_config->gpio_cs = PIN_NUM_CS;
     _slot_config->host_id = _host->slot;
 
     ESP_LOGI(__func__, "Mounting filesystem");

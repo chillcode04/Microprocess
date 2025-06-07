@@ -784,5 +784,5 @@ uint32_t max30102_getFIFORed(struct max30102_record *record);
  * @return uint32_t The next IR value in the FIFO
  */
 uint32_t max30102_getFIFOIR(struct max30102_record *record);
-void max30102_test(void *pvParameters);
+void max30102_test();
 void max30102_read(void);

@@ -6,3 +6,5 @@ int32_t buffer32[DMA_BUFFER_SIZE / sizeof(int32_t)] = {0}; //192 samples (768 by
 
 //-----------------------------------------MAX30102-------------------------------------------------//
 TaskHandle_t readMAXTask_handle = NULL;
+struct max30102_data data;
+struct max30102_record record;

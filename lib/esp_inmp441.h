@@ -3,5 +3,5 @@
 #include "config.h"
 
 void i2s_install(void);
-void readINMP441data_task(void *pvParameters);
+void readINMP441data_task();
 #endif

@@ -23,8 +23,8 @@ void i2c_master_init()
 		.sda_pullup_en = GPIO_PULLUP_ENABLE,
 		.scl_pullup_en = GPIO_PULLUP_ENABLE,
 		.master.clk_speed = 1000000};
-	i2c_param_config(I2C_NUM_0, &i2c_config);
-	i2c_driver_install(I2C_NUM_0, I2C_MODE_MASTER, 0, 0, 0);
+	i2c_param_config(I2C_NUM_1, &i2c_config);
+	i2c_driver_install(I2C_NUM_1, I2C_MODE_MASTER, 0, 0, 0);
 }
 
 
@@ -56,7 +56,7 @@ void sh1106_init()
 
 	i2c_master_stop(cmd);
 
-	espRc = i2c_master_cmd_begin(I2C_NUM_0, cmd, 10 / portTICK_PERIOD_MS);
+	espRc = i2c_master_cmd_begin(I2C_NUM_1, cmd, 10 / portTICK_PERIOD_MS);
 	if (espRc == ESP_OK)
 	{
 		ESP_LOGI(TAG_OLED, "OLED configured successfully");
@@ -85,7 +85,7 @@ void task_sh1106_display_clear(void *ignore)
 		i2c_master_write_byte(cmd, OLED_CONTROL_BYTE_DATA_STREAM, true);
 		i2c_master_write(cmd, zero, 132, true);
 		i2c_master_stop(cmd);
-		i2c_master_cmd_begin(I2C_NUM_0, cmd, 10 / portTICK_PERIOD_MS);
+		i2c_master_cmd_begin(I2C_NUM_1, cmd, 10 / portTICK_PERIOD_MS);
 		i2c_cmd_link_delete(cmd);
 	}
 
@@ -96,7 +96,7 @@ void task_sh1106_display_clear(void *ignore)
 	i2c_master_write_byte(cmd, 0x10, true);
 	i2c_master_write_byte(cmd, 0xB0, true); // reset page
 	i2c_master_stop(cmd);
-	i2c_master_cmd_begin(I2C_NUM_0, cmd, 10 / portTICK_PERIOD_MS);
+	i2c_master_cmd_begin(I2C_NUM_1, cmd, 10 / portTICK_PERIOD_MS);
 	i2c_cmd_link_delete(cmd);
 }
 
@@ -119,7 +119,7 @@ void task_sh1106_display_text(const void *arg_text)
 	i2c_master_write_byte(cmd, 0xB0 | cur_page, true); // reset page
 
 	i2c_master_stop(cmd);
-	i2c_master_cmd_begin(I2C_NUM_0, cmd, 10 / portTICK_PERIOD_MS);
+	i2c_master_cmd_begin(I2C_NUM_1, cmd, 10 / portTICK_PERIOD_MS);
 	i2c_cmd_link_delete(cmd);
 
 	for (uint8_t i = 0; i < text_len; i++)
@@ -136,7 +136,7 @@ void task_sh1106_display_text(const void *arg_text)
 			i2c_master_write_byte(cmd, 0xB0 | ++cur_page, true); // increment page
 
 			i2c_master_stop(cmd);
-			i2c_master_cmd_begin(I2C_NUM_0, cmd, 10 / portTICK_PERIOD_MS);
+			i2c_master_cmd_begin(I2C_NUM_1, cmd, 10 / portTICK_PERIOD_MS);
 			i2c_cmd_link_delete(cmd);
 		}
 		else
@@ -149,7 +149,7 @@ void task_sh1106_display_text(const void *arg_text)
 			i2c_master_write(cmd, font8x8_basic_tr[(uint8_t)text[i]], 8, true);
 
 			i2c_master_stop(cmd);
-			i2c_master_cmd_begin(I2C_NUM_0, cmd, 10 / portTICK_PERIOD_MS);
+			i2c_master_cmd_begin(I2C_NUM_1, cmd, 10 / portTICK_PERIOD_MS);
 			i2c_cmd_link_delete(cmd);
 		}
 	}
@@ -162,6 +162,6 @@ void oled_config() {
 
 void oled_display_text(const void *arg_text) {
 	task_sh1106_display_clear(NULL);
-    vTaskDelay(10/ portTICK_PERIOD_MS);
+    vTaskDelay(100/ portTICK_PERIOD_MS);
 	task_sh1106_display_text(arg_text);
 }
